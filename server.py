@@ -1,69 +1,65 @@
 import socket
-import threading	#execute multiple tasks at the same time
+import threading #for performing various tasks at the same time
 
-#declare ip, port
-host= '192.168.253.3' #server vm ip address
-PORT= 8888
+# Connection Data
+host = '192.168.253.3'
+port = 8888
 
-#create socket
+# Starting Server
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print("Socket created successfully.\n")
-
-server.bind(('', PORT))
-print("Socket is binded successfully to the port.\n")
-
-#listen to client that wants to connect to server
+server.bind(('', port))
+#waits for clients to connect
 server.listen()
-print("Waiting for client(s)!\n")
 
-clients = []    #keep list of clients
-nicknames = []  #keep list of clients' nicknames
+# Lists For Clients and Their Nicknames
+clients = []
+nicknames = []
 
-#function to inform clients their current positions in the game
-def broadcast(msg):
+
+# Sending Messages to all connected client about current position each client
+def broadcast(message):
     for client in clients:
-        print(msg)
+        print(message)
 
-#function to handle client
 def handle(client):
     while True:
-        try:    
-            position = client.recv(1024) 			                     #broadcast msg 
-        except:        			 			                                 #handle exception
+        try:
+            # Broadcasting Messages
+            position = client.recv(1024)
+        except:
+            # Removing And Closing Clients
             index = clients.index(client)
-            clients.remove(client) 				                         #remove clients
-            client.close() 						                             #close clients
-            nn = nicknames[index]
-            broadcast('{} left!'.format(nn).encode('ascii'))       #broadcast clients who left game
-            nicknames.remove(nn) 				                           #remove nicknames
+            clients.remove(client)
+            client.close()
+            nickname = nicknames[index]
+            broadcast('{} left!'.format(nickname).encode('ascii'))
+            nicknames.remove(nickname)
             break
 
-#receive and listen
+
+
+# Receiving / Listening Function
 def receive():
     while True:
-        # accept connection
-        client, addr = server.accept()
-        print("Connected to {}".format(str(addr))+"!\n")
+        # Accept Connection
+        client, address = server.accept()
+        print("Connected with {}".format(str(address)))
 
-        #ask client to input nickname
+        # Request And Store Nickname
         client.send('NICK'.encode('ascii'))
-        nn = client.recv(1024).decode('ascii')
-        nicknames.append(nn)					    #add nn to nicknames[]
-        clients.append(client) 					  #add client to clients[]
+        nickname = client.recv(1024).decode('ascii')
+        nicknames.append(nickname)
+        clients.append(client)
 
-        #print nickname
-        print("Client nickname: {}".format(nn)) 
+        # Print And Broadcast Nickname
+        print("Nickname is {}".format(nickname))
+        broadcast("{} joined to the snake ladder game!".format(nickname).encode('ascii'))
+        client.send('Connected to server!'.encode('ascii'))
 
-        #broadcast the nickname entered by client and successful connection
-        broadcast("{} joined the game.Hi there!".format(nn).encode('ascii'))
-        client.send('Client is connected to the server.\n'.encode('ascii'))
-
-        #handle thread for clients
+        # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
-        thread.start() 						#start thread
+        thread.start()
 
-
-print("Listening to incoming clients...")
-
-#while-loop that loops forever and  accepts new connections from clients whenever there is any
+print("Server is listening... for client to join snake ladder game")
+#It starts an endless while-loop which constantly accepts new connections from clients.
 receive()

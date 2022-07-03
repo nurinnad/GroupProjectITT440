@@ -2,18 +2,21 @@ import socket
 import errno
 import time
 import random
-from os import system 
+from os import system
 
 
 _ = system('clear')
 
 # User will choose their nicknames
-print("------------------------------------------------------------------------------")
-print("|         WELCOME TO SNAKE AND LADDER GAMES ENJOY AND HAVE FUN !!!!          |")
-print("------------------------------------------------------------------------------")
+print("-------------------------------------------------------------------")
+print("|            Welcome to the Snake and Ladder Game                  |") 
+print("|                      Version: 1.0.0                              |")
+print("|              Developed by: nurin,syaf,qila                       |")
+print("-------------------------------------------------------------------")
 
-print ("The name of player will be display on the server side")
-nickname = input("Please enter your nickname: ")
+
+print ("Name will display on server")
+nickname = input("Choose your nickname: ")
 
 # put the ip address of server and same socket to be conneting with the server side 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,7 +27,7 @@ WAIT  = 1
 MAX_VAL = 50
 
 # this is the value is when player get this value and they will go down as there will be snakes 
-snakes = {
+ snakes = {
     21: 5,
     42: 20,
     49: 39,
@@ -45,11 +48,12 @@ player_turn_text = [
     "Let's go ahead and win this together.",
     "Are you ready?, Here we go.",
     "",
+
 ]
 
 
 snake_bite = [
-    "Oh crap",
+    "Oops",
     "OMG !",
     "you got snake bite",
     "oh no !!",
@@ -70,15 +74,14 @@ ladder_jump = [
 def welcome_msg():
     msg = """
     Welcome to Snake and Ladder Game.
-    41 42 43 44 45 46 47 48 49 50
-        *  ^        ^     ^ *
-    40 39 38 37 36 35 34 33 32 31
-           \          \   \   
-    21 22 23 24 25 26 27 28 29 30
-    *    \     \          \  \  
-    20 19 18 17 16 15 14 13 12 11
-                \              \  
-    1  2  3  4  5  6  7  8  9  10
+   Rules:
+      1. Initally both the players are at starting position i.e. 0. 
+         Take it in turns to roll the dice. 
+         Move forward the number of spaces shown on the dice.
+      2. If you lands at the bottom of a ladder, you can move up to the top of the ladder.
+      3. If you lands on the head of a snake, you must slide down to the bottom of the snake.
+      4. The first player to get to the FINAL position is the winner.
+      5. Hit enter to roll the dice.
     Snake          Ladder
     49 go to 39    5  go to 43
     42 go to 20    10 go to 48
@@ -143,9 +146,9 @@ def startgame():
     while True:
         try:
             # Receive Message From Server
-            # If 'NAD' Send Nickname
+            # If 'NICK' Send Nickname
             message = client.recv(1024).decode('ascii')
-            if message == 'NAD':
+            if message == 'NICK':
                 client.send(nickname.encode('ascii'))
             else:
                  time.sleep(WAIT)
