@@ -27,7 +27,7 @@ WAIT  = 1
 MAX_VAL = 50
 
 # this is the value is when player get this value and they will go down as there will be snakes 
- snakes = {
+snakes = {
     21: 5,
     42: 20,
     49: 39,
@@ -41,7 +41,7 @@ ladders = {
 }
 
 
-player_turn_text = [
+message_support_player = [
     "It is your turn",
     "Go ahead.",
     "Please proceed.",
@@ -52,7 +52,7 @@ player_turn_text = [
 ]
 
 
-snake_bite = [
+snakeBite = [
     "Oops",
     "OMG !",
     "you got snake bite",
@@ -61,7 +61,7 @@ snake_bite = [
 ]
 
 
-ladder_jump = [
+ladderPoint = [
     "Phew",
     "woww",
     "nailed it",
@@ -89,28 +89,28 @@ def welcome_msg():
     """
     print(msg)
 
-def get_dice_value():
+def UserDiceValue():
     time.sleep(WAIT)
-    dice_value = random.randint(1,6)
-    print("Its a " + str(dice_value))
-    return dice_value
+    diceValue = random.randint(1,6)
+    print("Its a " + str(diceValue))
+    return diceValue
 
 
 def got_snake_bite(old_value, current_value, player_name):
-    print("\n" + random.choice(snake_bite).upper() + " ~~~~~~~~>")
+    print("\n" + random.choice(snakeBite).upper() + " ~~~~~~~~>")
     print("\n" + player_name + " got a snake bite. Down from " + str(old_value)+ " to " + str(current_value))
 
 def got_ladder_jump(old_value, current_value, player_name):
-    print("\n" + random.choice(ladder_jump).upper() + " ########")
+    print("\n" + random.choice(ladderPoint).upper() + " ########")
     print("\n" + player_name + " climbed the ladder from " + str(old_value) + " to " + str(current_value))
 
 
 
 
-def snake_ladder(player_name, current_value, dice_value):
+def snake_ladder(player_name, current_value, diceValue):
     time.sleep(WAIT)
     old_value = current_value
-    current_value = current_value + dice_value
+    current_value = current_value + diceValue
 
     if current_value > MAX_VAL:
         print("You need " + str(MAX_VAL - old_value) + " to win this game. Keep trying,OKAY !" )
@@ -163,12 +163,12 @@ def startgame():
                       print(round)
                       print("\nCurrent position :")
                       print(player_current_position)
-                      input_1 = input("\n" + player_name + ": " + random.choice(player_turn_text) + " Hit the enter to roll dice: ")
+                      input_1 = input("\n" + player_name + ": " + random.choice(message_support_player) + " Hit the enter to roll dice: ")
                       print("\nRolling dice...")
-                      dice_value = get_dice_value()
+                      diceValue = UserDiceValue()
                       time.sleep(WAIT)
                       print(player_name + " moving....")
-                      player_current_position = snake_ladder(player_name, player_current_position, dice_value)
+                      player_current_position = snake_ladder(player_name, player_current_position, diceValue)
                       time.sleep(3)
                       round=round+1
 
