@@ -8,9 +8,9 @@ from os import system
 _ = system('clear')
 
 # User will choose their nicknames
-print("----------------------------------------------------------------------------------------")
-print("|           WELCOME TO SNAKE AND LADDER GAMES ENJOY AND HAVE FUN !!!!                  |")
-print("----------------------------------------------------------------------------------------")
+print("------------------------------------------------------------------------------")
+print("|         WELCOME TO SNAKE AND LADDER GAMES ENJOY AND HAVE FUN !!!!          |")
+print("------------------------------------------------------------------------------")
 
 print ("The name of player will be display on the server side")
 nickname = input("Please enter your nickname: ")
@@ -143,9 +143,9 @@ def startgame():
     while True:
         try:
             # Receive Message From Server
-            # If 'NICK' Send Nickname
+            # If 'NAD' Send Nickname
             message = client.recv(1024).decode('ascii')
-            if message == 'NICK':
+            if message == 'NAD':
                 client.send(nickname.encode('ascii'))
             else:
                  time.sleep(WAIT)

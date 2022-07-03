@@ -3,7 +3,7 @@ import threading	#execute multiple tasks at the same time
 
 #declare ip, port
 host= '192.168.253.3' #server vm ip address
-PORT= 5555
+PORT= 8888
 
 #create socket
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
