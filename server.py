@@ -46,7 +46,7 @@ def receive():
         print("Connected with {}".format(str(address)))
 
         # Request And Store Nickname
-        client.send('NICK'.encode('ascii'))
+        client.send('USER'.encode('ascii'))
         nickname = client.recv(1024).decode('ascii')
         nicknames.append(nickname)
         clients.append(client)
