@@ -7,10 +7,10 @@ from os import system
 
 _ = system('clear')
 
-# Choosing Nickname
-print("-------------------------------------------------------------------")
+# User choose their nickname
+print("--------------------------------------------------------------------------------")
 print("|            Welcome to the Snake and Ladder Game                  |")
-print("-------------------------------------------------------------------")
+print("--------------------------------------------------------------------------------")
 print ("Name will display on server")
 nickname = input("Choose your nickname: ")
 
