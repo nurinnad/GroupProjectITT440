@@ -146,9 +146,9 @@ def startgame():
     while True:
         try:
             # Receive Message From Server
-            # If 'NICK' Send Nickname
+            # If 'USER' Send Nickname
             message = client.recv(1024).decode('ascii')
-            if message == 'NICK':
+            if message == 'USER':
                 client.send(nickname.encode('ascii'))
             else:
                  time.sleep(WAIT)
