@@ -46,7 +46,7 @@ def receive():
         print("Connected to {}".format(str(addr))+"!\n")
 
         #ask client to input nickname
-        client.send('NICK'.encode('ascii'))
+        client.send('USER'.encode('ascii'))
         nn = client.recv(1024).decode('ascii')
         nicknames.append(nn)					    #add nn to nicknames[]
         clients.append(client) 					  #add client to clients[]
