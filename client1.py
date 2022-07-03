@@ -2,51 +2,54 @@ import socket
 import errno
 import time
 import random
-from os import system
+from os import system 
 
 
 _ = system('clear')
 
-# User choose their nickname
-print("--------------------------------------------------------------------------------")
-print("|            Welcome to the Snake and Ladder Game                  |")
-print("--------------------------------------------------------------------------------")
-print ("Name will display on server")
-nickname = input("Choose your nickname: ")
+# User will choose their nicknames
+print("----------------------------------------------------------------------------------------")
+print("|           WELCOME TO SNAKE AND LADDER GAMES ENJOY AND HAVE FUN !!!!                  |")
+print("----------------------------------------------------------------------------------------")
 
-# Connecting To Server
+print ("The name of player will be display on the server side")
+nickname = input("Please enter your nickname: ")
+
+# put the ip address of server and same socket to be conneting with the server side 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('192.168.253.3', 55555))
+client.connect(('192.168.253.3', 8888))
 
-# just of effects. add a delay of 1 second before performing any action
+# this is for effect for delay effect for 1 second after performing of any action
 WAIT  = 1
 MAX_VAL = 50
 
-# snake takes you down
+# this is the value is when player get this value and they will go down as there will be snakes 
 snakes = {
-    39: 3,
-    46: 14,
-    49: 13,
+    21: 5,
+    42: 20,
+    49: 39,
 }
 
-# ladder takes you up
+# this is the value is when player get this value and they will go up as there will be stairs
 ladders = {
     5: 43,
-    9: 30,
-    20: 41,
+    10: 48,
+    13: 48,
 }
+
+
 player_turn_text = [
-    "Your turn.",
-    "Go.",
+    "It is your turn",
+    "Go ahead.",
     "Please proceed.",
-    "Lets win this.",
-    "Are you ready?",
+    "Let's go ahead and win this together.",
+    "Are you ready?, Here we go.",
     "",
 ]
 
 
 snake_bite = [
-    "Oops",
+    "Oh crap",
     "OMG !",
     "you got snake bite",
     "oh no !!",
@@ -68,18 +71,18 @@ def welcome_msg():
     msg = """
     Welcome to Snake and Ladder Game.
     41 42 43 44 45 46 47 48 49 50
-    ^     ^        *        *
+        *  ^        ^     ^ *
     40 39 38 37 36 35 34 33 32 31
-    |  *   \        \      /
+           \          \   \   
     21 22 23 24 25 26 27 28 29 30
-    |   \     \       \   /    ^
+    *    \     \          \  \  
     20 19 18 17 16 15 14 13 12 11
-         \      \            /
+                \              \  
     1  2  3  4  5  6  7  8  9  10
-    Snake    Ladder
-    49->13   20->41
-    46->14   9->30
-    39->3    5->43
+    Snake          Ladder
+    49 go to 39    5  go to 43
+    42 go to 20    10 go to 48
+    21 go to  5    13 go to 46
     """
     print(msg)
 

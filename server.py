@@ -2,7 +2,7 @@ import socket
 import threading	#execute multiple tasks at the same time
 
 #declare ip, port
-host= '192.168.56.104' #server vm ip address
+host= '192.168.253.3' #server vm ip address
 PORT= 5555
 
 #create socket
