@@ -72,6 +72,7 @@ ladderPoint = [
 
 
 def welcome_msg():
+#function  to welcome user to the program
     msg = """
     Welcome to Snake and Ladder Game.
    Rules:
@@ -90,6 +91,7 @@ def welcome_msg():
     print(msg)
 
 def UserDiceValue():
+#function suspends (waits) execution of the current thread for a given number of seconds.
     time.sleep(WAIT)
     diceValue = random.randint(1,6)
     print("Its a " + str(diceValue))
@@ -163,7 +165,7 @@ def startgame():
                       print(round)
                       print("\nCurrent position :")
                       print(player_current_position)
-                      input_1 = input("\n" + player_name + ": " + random.choice(message_support_player) + " Hit the enter to roll dice: ")
+                      input_1 = input("\n" + player_name + ": " + random.choice(message_support_player) + " Press the "enter" key for the roll dice: ")
                       print("\nRolling dice...")
                       diceValue = UserDiceValue()
                       time.sleep(WAIT)
