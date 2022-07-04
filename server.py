@@ -1,65 +1,71 @@
 import socket
-import threading #for performing various tasks at the same time
+import threading #for performance
+#declare ip, port
+host= '192.168.56.104' #server vm ip address
+PORT= 5555
 
-# Connection Data
-host = '192.168.253.3'
-port = 8888
-
-# Starting Server
+#create socket
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('', port))
-#waits for clients to connect
+print("Socket created successfully.\n")
+
+server.bind(('', PORT))
+print("Socket is binded successfully to the port.\n")
+
+#listen to client that wants to connect to server
 server.listen()
+print("Waiting for client(s)!\n")
 
-# Lists For Clients and Their Nicknames
-clients = []
-nicknames = []
+clients = []    #keep list of clients
+nicknames = []  #keep list of clients' nicknames
 
-
-# Sending Messages to all connected client about current position each client
-def broadcast(message):
+#function to inform clients their current positions in the game
+def broadcast(msg):
+#for client in clients[], print msg
     for client in clients:
-        print(message)
+        print(msg)
 
+#function to handle client
 def handle(client):
     while True:
         try:
-            # Broadcasting Messages
-            position = client.recv(1024)
-        except:
-            # Removing And Closing Clients
+            position = client.recv(1024) #broadcast msg
+        except:         #handle the error if there is any while executing code in try
             index = clients.index(client)
-            clients.remove(client)
-            client.close()
-            nickname = nicknames[index]
-            broadcast('{} left!'.format(nickname).encode('ascii'))
-            nicknames.remove(nickname)
+            clients.remove(client) #remove clients
+            client.close() #close clients
+            nn = nicknames[index]
+            broadcast('{} left!'.format(nn).encode('ascii')) #broadcast clients who left game
+            nicknames.remove(nn) #remove nicknames
             break
 
-
-
-# Receiving / Listening Function
+#receive and listen
 def receive():
     while True:
-        # Accept Connection
-        client, address = server.accept()
-        print("Connected with {}".format(str(address)))
+        # accept connection
+        client, addr = server.accept()
+        print("Connected to {}".format(str(addr))+"!\n")
 
-        # Request And Store Nickname
+        #ask client to input nickname
         client.send('USER'.encode('ascii'))
-        nickname = client.recv(1024).decode('ascii')
-        nicknames.append(nickname)
-        clients.append(client)
+        nn = client.recv(1024).decode('ascii')
+        nicknames.append(nn) #add nn to nicknames[]
+        clients.append(client) #add client to clients[]
 
-        # Print And Broadcast Nickname
-        print("Nickname is {}".format(nickname))
-        broadcast("{} joined to the snake ladder game!".format(nickname).encode('ascii'))
-        client.send('Connected to server!'.encode('ascii'))
+        #print nickname
+        print("Client nickname: {}".format(nn)) #string format
 
-        # Start Handling Thread For Client
+        #broadcast the nickname entered by client and successful connection
+        broadcast("{} joined the game.Hi there!".format(nn).encode('ascii'))
+        client.send('Client is connected to the server.\n'.encode('ascii'))
+
+        #handle thread for clients
         thread = threading.Thread(target=handle, args=(client,))
-        thread.start()
+        thread.start() #start thread
 
-print("Server is listening... for client to join snake ladder game")
-#It starts an endless while-loop which constantly accepts new connections from clients.
+
+print("Listening to incoming clients...")
+
+#while-loop that loops forever and  accepts new connections from clients whenever there is a>
 receive()
+
+
